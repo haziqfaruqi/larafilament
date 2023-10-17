@@ -31,11 +31,11 @@ class StateResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('state_id')
-                    ->relationship(name: 'state', titleAttribute: 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                Forms\Components\Select::make('country_id')
+                ->relationship(name: 'country', titleAttribute: 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
