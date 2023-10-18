@@ -117,18 +117,6 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('country_id')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('state_id')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('city_id')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('department_id')
-                //     ->numeric()
-                //     ->sortable(),
                 Tables\Columns\TextColumn::make('country.name')
                     ->sortable()
                     ->searchable(),
@@ -162,7 +150,40 @@ class EmployeeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('Department')
+                ->relationship('department', 'name')
+                ->searchable()
+                ->preload()
+                ->label('Filter by Department')
+                ->indicator('Department'),
+
+                Filter::make('created_at')
+                ->form([
+                DatePicker::make('created_from'),
+                DatePicker::make('created_until'),
+            ])
+            ->query(function (Builder $query, array $data): Builder {
+                return $query
+                    ->when(
+                        $data['created_from'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                    )
+                    ->when(
+                        $data['created_until'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                    );
+                })
+                ->indicateUsing(function (array $data): array {
+                    $indicators = [];
+                    if ($data['created_from'] ?? null) {
+                        $indicators['created_from'] = 'Created from ' . Carbon::parse($data['created_from'])->toFormattedDateString();
+                    }
+                    if ($data['created_until'] ?? null) {
+                        $indicators['created_until'] = 'Created until ' . Carbon::parse($data['created_until'])->toFormattedDateString();
+                    }
+
+                    return $indicators;
+                }),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

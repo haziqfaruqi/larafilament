@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->char('zip_code');
             $table->date('date_of_birth');
-            $table->date('data_hired');
+            $table->date('date_hired');
             $table->timestamps();
         });
     }
