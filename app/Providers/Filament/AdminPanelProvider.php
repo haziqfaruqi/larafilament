@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter')
             ->navigationGroups([
                 'Employee Management',
-                'System Mangement',
+                'System Management',
                 'User Management'
             ])
             ->brandName('my')
