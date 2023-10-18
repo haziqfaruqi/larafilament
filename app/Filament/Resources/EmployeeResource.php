@@ -105,7 +105,7 @@ class EmployeeResource extends Resource
                     ->native(false)
                     ->displayFormat('d/m/Y')
                     ->required(),
-                Forms\Components\DatePicker::make('data_hired')
+                Forms\Components\DatePicker::make('date_hired')
                     ->native(false)
                     ->displayFormat('d/m/Y')
                     ->required(),
@@ -137,7 +137,7 @@ class EmployeeResource extends Resource
                     ->date()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('data_hired')
+                Tables\Columns\TextColumn::make('date_hired')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
