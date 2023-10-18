@@ -10,6 +10,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -76,6 +79,18 @@ class CityResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
+
+    public static function infolist(InfoList $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('City Info')
+                ->schema([
+                    TextEntry::make('state.name')->label('State Name'),
+                    TextEntry::make('name')->label('City Name'),
+                ])->columns(2)
+            ]);
+    }
     
     public static function getRelations(): array
     {
@@ -89,7 +104,7 @@ class CityResource extends Resource
         return [
             'index' => Pages\ListCities::route('/'),
             'create' => Pages\CreateCity::route('/create'),
-            'view' => Pages\ViewCity::route('/{record}'),
+            //'view' => Pages\ViewCity::route('/{record}'),
             'edit' => Pages\EditCity::route('/{record}/edit'),
         ];
     }    

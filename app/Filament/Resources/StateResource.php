@@ -83,6 +83,18 @@ class StateResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
+
+    public static function infolist(InfoList $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('State Info')
+                ->schema([
+                    TextEntry::make('country.name')->label('Country Name'),
+                    TextEntry::make('name')->label('State Name'),
+                ])->columns(2)
+            ]);
+    }
     
     public static function getRelations(): array
     {

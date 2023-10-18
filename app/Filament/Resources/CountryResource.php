@@ -10,6 +10,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -71,6 +74,7 @@ class CountryResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -83,6 +87,18 @@ class CountryResource extends Resource
             ]);
     }
     
+    public static function infolist(InfoList $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Country Info')
+                ->schema([
+                    TextEntry::make('name')->label('Name'),
+                    TextEntry::make('code')->label('Country Code'),
+                    TextEntry::make('phonecode')->label('Phone Code')
+                ])->columns(2)
+            ]);
+    }
     public static function getRelations(): array
     {
         return [
